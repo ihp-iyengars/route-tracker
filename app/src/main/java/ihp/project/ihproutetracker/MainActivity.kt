@@ -1,6 +1,8 @@
 package ihp.project.ihproutetracker
 
+
 import android.Manifest
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,8 +10,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.SupportMapFragment
 import ihp.project.ihproutetracker.R.*
+import ihp.project.ihproutetracker.location.LocationUpdateService
 import ihp.project.ihproutetracker.ui.EnterRouteName
 
 
@@ -34,6 +36,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startRoute() {
+        val serviceIntent = Intent(this, LocationUpdateService::class.java)
+        startService(serviceIntent)
+        // Add this line to include FLAG_IMMUTABLE
+        val pendingIntent = PendingIntent.getService(this,
+            0, serviceIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        // Start the service using the pendingIntent
+        try {
+            pendingIntent.send()
+        } catch (e: PendingIntent.CanceledException) {
+            e.printStackTrace()
+        }
+
         val intent = Intent(this, EnterRouteName::class.java)
         startActivity(intent)
     }

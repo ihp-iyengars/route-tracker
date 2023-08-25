@@ -1,11 +1,11 @@
 package ihp.project.ihproutetracker.ui
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,13 +17,23 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import ihp.project.ihproutetracker.R
-import ihp.project.ihproutetracker.ui.PathDetailsActivity
 
 class TraceRoute : AppCompatActivity() {
+
     private lateinit var mMap: GoogleMap
     private lateinit var routeName: String
     private var pathPoints = mutableListOf<LatLng>()
     private var locationUpdatesEnabled = true
+
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+            locationResult?.lastLocation?.let { location ->
+                val latLng = LatLng(location.latitude, location.longitude)
+                pathPoints.add(latLng)
+                drawPath()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +41,7 @@ class TraceRoute : AppCompatActivity() {
 
         routeName = intent.getStringExtra("routeName") ?: "Default Route"
 
+        // Check for location permission
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -38,6 +49,7 @@ class TraceRoute : AppCompatActivity() {
         ) {
             initializeMapAndLocation()
         } else {
+            // Request permission if not granted
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -46,8 +58,9 @@ class TraceRoute : AppCompatActivity() {
         }
 
         val stopRouteButton = findViewById<Button>(R.id.stopRouteButton)
+
         stopRouteButton.setOnClickListener {
-            showStopConfirmationDialog()
+            showAlertDialog()
         }
     }
 
@@ -57,7 +70,6 @@ class TraceRoute : AppCompatActivity() {
             .commit()
         mapFragment.getMapAsync { googleMap ->
             mMap = googleMap
-
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -65,18 +77,8 @@ class TraceRoute : AppCompatActivity() {
             ) {
                 mMap.isMyLocationEnabled = true
 
-                val locationCallback = object : LocationCallback() {
-                    override fun onLocationResult(locationResult: LocationResult?) {
-                        locationResult?.lastLocation?.let { location ->
-                            val latLng = LatLng(location.latitude, location.longitude)
-                            pathPoints.add(latLng)
-                            drawPath()
-                        }
-                    }
-                }
-
                 val locationRequest = LocationRequest.create().apply {
-                    interval = 3000
+                    interval = 3000 // 3 seconds
                     fastestInterval = 3000
                     priority = LocationRequest.PRIORITY_HIGH_ACCURACY
                 }
@@ -93,27 +95,26 @@ class TraceRoute : AppCompatActivity() {
         mMap.addPolyline(polylineOptions)
     }
 
-    private fun showStopConfirmationDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(this)
-        alertDialogBuilder.setTitle("Confirm")
-        alertDialogBuilder.setMessage("Are you sure you want to stop the route?")
-        alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
-            stopRoute()
-        }
-        alertDialogBuilder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
+    private lateinit var alertDialog: AlertDialog
 
-    private fun stopRoute() {
-        locationUpdatesEnabled = false
-        val intent = Intent(this, PathDetailsActivity::class.java)
-        intent.putExtra("routeName", routeName)
-        Log.d("Console Statement", "lat lng are $pathPoints")
-        intent.putParcelableArrayListExtra("pathPoints", ArrayList(pathPoints))
-        startActivity(intent)
+    private fun showAlertDialog() {
+        alertDialog = AlertDialog.Builder(this)
+            .setTitle("Confirm Stop")
+            .setMessage("Are you sure you want to stop the route?")
+            .setPositiveButton("Yes") { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+                locationUpdatesEnabled = false
+                val intent = Intent(this, PathDetailsActivity::class.java)
+                intent.putParcelableArrayListExtra("pathPoints", ArrayList(pathPoints))
+                intent.putExtra("routeName", routeName)
+                startActivity(intent)
+            }
+            .setNegativeButton("No") { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
     }
 
     companion object {
@@ -129,6 +130,8 @@ class TraceRoute : AppCompatActivity() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initializeMapAndLocation()
+            } else {
+                // Handle the case when permission is denied
             }
         }
     }
