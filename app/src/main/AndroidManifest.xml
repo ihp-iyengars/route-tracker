@@ -26,9 +26,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.PathDetailsActivity" />
-        <activity android:name=".ui.EnterRouteName" />
-        <activity android:name=".ui.TraceRoute" />
+        <activity android:name=".components.PathDetailsActivity" />
+        <activity android:name=".components.EnterRouteName" />
+        <activity android:name=".components.TraceRoute" />
 
 
         <meta-data

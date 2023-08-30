@@ -1,4 +1,4 @@
-package ihp.project.ihproutetracker.ui
+package ihp.project.ihproutetracker.components
 
 import android.Manifest
 import android.content.Intent
@@ -17,7 +17,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import ihp.project.ihproutetracker.R
-import ihp.project.ihproutetracker.ui.PathDetailsActivity
 
 class TraceRoute : AppCompatActivity() {
     private lateinit var mMap: GoogleMap

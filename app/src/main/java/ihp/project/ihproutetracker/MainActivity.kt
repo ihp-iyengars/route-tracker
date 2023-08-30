@@ -8,9 +8,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.SupportMapFragment
 import ihp.project.ihproutetracker.R.*
-import ihp.project.ihproutetracker.ui.EnterRouteName
+import ihp.project.ihproutetracker.components.EnterRouteName
 
 
 class MainActivity : AppCompatActivity() {

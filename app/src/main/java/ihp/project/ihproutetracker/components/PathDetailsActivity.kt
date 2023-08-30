@@ -1,4 +1,4 @@
-package ihp.project.ihproutetracker.ui
+package ihp.project.ihproutetracker.components
 
 import android.os.Bundle
 import android.widget.TextView
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
-import ihp.project.ihproutetracker.ui.PathAdapter
 import ihp.project.ihproutetracker.R
 
 class PathDetailsActivity : AppCompatActivity() {

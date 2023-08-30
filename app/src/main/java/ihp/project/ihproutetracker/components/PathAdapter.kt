@@ -1,4 +1,4 @@
-package ihp.project.ihproutetracker.ui
+package ihp.project.ihproutetracker.components
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package ihp.project.ihproutetracker.ui
+package ihp.project.ihproutetracker.components
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import ihp.project.ihproutetracker.R
-import ihp.project.ihproutetracker.ui.TraceRoute
 
 class EnterRouteName : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
