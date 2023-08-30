@@ -1,19 +1,36 @@
-<!-- res/layout/activity_activity1.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#ffb38a"
+    tools:context=".ui.EnterRouteName">
 
     <EditText
         android:id="@+id/routeNameInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Route Name" />
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="8dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="    Enter route name"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"/>
 
     <Button
         android:id="@+id/startRouteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Route" />
-</LinearLayout>
+        android:text="Start Route"
+        android:layout_below="@+id/routeNameInput"
+        android:background="#00FF00"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+</RelativeLayout>

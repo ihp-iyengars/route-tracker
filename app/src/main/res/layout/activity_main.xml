@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#ffb38a"
+    android:gravity="center"
     android:padding="16dp"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/startImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ihp_logo"
+        android:layout_marginBottom="0dp"/>
+
+    <TextView
+        android:id="@+id/routeTrackerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startImage"
+        android:layout_centerHorizontal="true"
+        android:text="IHP ROUTE TRACKER"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="0dp" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Route" />
-
-</LinearLayout>
+        android:padding="20dp"
+        android:layout_below="@id/routeTrackerText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#ff6700"
+        android:text="Add Route"
+        android:textSize="24dp"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

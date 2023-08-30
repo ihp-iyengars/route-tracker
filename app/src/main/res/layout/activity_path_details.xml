@@ -8,14 +8,31 @@
     android:padding="16dp"
     tools:context=".ui.PathDetailsActivity">
 
+<!--    <TextView-->
+<!--        android:id="@+id/routeNameTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAppearance="?android:textAppearanceMedium"-->
+<!--        android:text="Route Name Placeholder"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_marginBottom="16dp" />-->
+
     <TextView
-        android:id="@+id/routeNameTextView"
+        android:id="@+id/successMessageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="Route Name Placeholder"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/finishButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginTop="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
